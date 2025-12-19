@@ -53,3 +53,19 @@ Aplikacija temelji na sodobnih Android tehnologijah in knjižnicah:
 - Push notifications s sistemskimi obvestili.  
 - Lokalna hramba podatkov za delo brez interneta.  
 - Urejen in intuitiven uporabniški vmesnik.  
+
+## Zaslonski posnetki
+
+### Sklop 1
+
+<p>
+  <img src="screenshots/home.png" alt="Home" width="220" style="margin:8px;"/>
+  <img src="screenshots/add.png" alt="Add" width="220" style="margin:8px;"/>
+  <img src="screenshots/edit.png" alt="Edit" width="220" style="margin:8px;"/>
+  
+</p>
+<p>
+  <img src="screenshots/map.png" alt="Map" width="220" style="margin:8px;"/>
+  <img src="screenshots/settings.png" alt="Settings" width="220" style="margin:8px;"/>
+  <img src="screenshots/dark.png" alt="Dark mode" width="220" style="margin:8px;"/>
+</p>
