@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Notifications Section -->
+        <TextView
+            android:id="@+id/textViewNotificationsHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_notifications"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchNotifications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checked="true"
+            android:text="@string/settings_enable_notifications"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNotificationsHeader" />
+
+        <TextView
+            android:id="@+id/textViewNotificationsDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:text="@string/settings_enable_notifications_desc"
+            android:textSize="12sp"
+            android:textColor="?android:textColorSecondary"
+            app:layout_constraintTop_toBottomOf="@+id/switchNotifications" />
+
+        <TextView
+            android:id="@+id/textViewRadiusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/settings_default_radius"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNotificationsDesc" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderDefaultRadius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="50"
+            android:value="100"
+            android:valueFrom="50"
+            android:valueTo="500"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRadiusLabel" />
+
+        <TextView
+            android:id="@+id/textViewRadiusValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radius_meters_default"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sliderDefaultRadius" />
+
+        <!-- Appearance Section -->
+        <TextView
+            android:id="@+id/textViewAppearanceHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/settings_appearance"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRadiusValue" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchDarkMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/settings_dark_mode"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAppearanceHeader" />
+
+        <!-- About Section -->
+        <TextView
+            android:id="@+id/textViewAboutHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/settings_about"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switchDarkMode" />
+
+        <TextView
+            android:id="@+id/textViewVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/settings_version"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAboutHeader" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

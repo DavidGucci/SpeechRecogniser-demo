@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.todomap.MainFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_home_to_add_edit"
+            app:destination="@id/navigation_add_edit_todo" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.example.todomap.MapFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.todomap.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/navigation_add_edit_todo"
+        android:name="com.example.todomap.ui.AddEditTodoFragment"
+        android:label="@string/add_todo"
+        tools:layout="@layout/fragment_add_edit_todo">
+        <argument
+            android:name="todo_id"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+</navigation>
