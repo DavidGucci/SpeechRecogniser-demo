@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.todomap.R
+import com.example.todomap.ToDoMapApp
 import com.example.todomap.databinding.FragmentAddEditTodoBinding
 import com.example.todomap.model.TodoItem
 import com.example.todomap.repository.TodoRepository
+import kotlinx.coroutines.launch
 
 class AddEditTodoFragment : Fragment() {
 
@@ -37,7 +40,7 @@ class AddEditTodoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        repository = TodoRepository(requireContext())
+        repository = (requireActivity().application as ToDoMapApp).todoRepository
 
         arguments?.let { args ->
             editingTodoId = args.getLong(ARG_TODO_ID, -1L)
@@ -66,20 +69,26 @@ class AddEditTodoFragment : Fragment() {
         }
 
         binding.buttonSelectLocation.setOnClickListener {
+            // TODO: open map picker in the future
+        }
 
+        binding.sliderRadius.addOnChangeListener { _, value, _ ->
+            binding.textViewRadiusValue.text = getString(R.string.radius_meters, value.toInt())
         }
     }
 
     private fun loadTodoForEditing(todoId: Long) {
-        val todo = repository.getTodoById(todoId)
-        todo?.let {
-            binding.apply {
-                editTextTitle.setText(it.title)
-                editTextDescription.setText(it.description)
-                editTextLocationName.setText(it.locationName)
-                switchNotifyOnLocation.isChecked = it.notifyOnLocation
-                sliderRadius.value = it.radiusMeters.toFloat()
-                textViewRadiusValue.text = getString(R.string.radius_meters, it.radiusMeters)
+        viewLifecycleOwner.lifecycleScope.launch {
+            val todo = repository.getTodoById(todoId)
+            todo?.let {
+                binding.apply {
+                    editTextTitle.setText(it.title)
+                    editTextDescription.setText(it.description)
+                    editTextLocationName.setText(it.locationName)
+                    switchNotifyOnLocation.isChecked = it.notifyOnLocation
+                    sliderRadius.value = it.radiusMeters.toFloat()
+                    textViewRadiusValue.text = getString(R.string.radius_meters, it.radiusMeters)
+                }
             }
         }
     }
@@ -99,33 +108,35 @@ class AddEditTodoFragment : Fragment() {
 
         binding.textInputLayoutTitle.error = null
 
-        val todoItem = if (isEditMode) {
-            repository.getTodoById(editingTodoId)?.copy(
-                title = title,
-                description = description,
-                locationName = locationName,
-                notifyOnLocation = notifyOnLocation,
-                radiusMeters = radius
-            ) ?: return
-        } else {
-            TodoItem(
-                title = title,
-                description = description,
-                locationName = locationName,
-                notifyOnLocation = notifyOnLocation,
-                radiusMeters = radius
-            )
+        viewLifecycleOwner.lifecycleScope.launch {
+            val todoItem = if (isEditMode) {
+                repository.getTodoById(editingTodoId)?.copy(
+                    title = title,
+                    description = description,
+                    locationName = locationName,
+                    notifyOnLocation = notifyOnLocation,
+                    radiusMeters = radius
+                ) ?: return@launch
+            } else {
+                TodoItem(
+                    title = title,
+                    description = description,
+                    locationName = locationName,
+                    notifyOnLocation = notifyOnLocation,
+                    radiusMeters = radius
+                )
+            }
+
+            repository.saveTodo(todoItem)
+
+            Toast.makeText(
+                requireContext(),
+                if (isEditMode) getString(R.string.todo_updated) else getString(R.string.todo_added),
+                Toast.LENGTH_SHORT
+            ).show()
+
+            findNavController().navigateUp()
         }
-
-        repository.saveTodo(todoItem)
-
-        Toast.makeText(
-            requireContext(),
-            if (isEditMode) getString(R.string.todo_updated) else getString(R.string.todo_added),
-            Toast.LENGTH_SHORT
-        ).show()
-
-        findNavController().navigateUp()
     }
 
     override fun onDestroyView() {
@@ -133,4 +144,3 @@ class AddEditTodoFragment : Fragment() {
         _binding = null
     }
 }
-
