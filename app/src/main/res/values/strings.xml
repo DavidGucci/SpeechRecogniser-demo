@@ -10,6 +10,7 @@
     <string name="map_placeholder">Map View</string>
     <string name="map_description">Your todo items on a map will appear here</string>
     <string name="map_loading">Loading map...</string>
+    <string name="my_location">My location</string>
 
     <string name="settings_placeholder">Settings</string>
     <string name="settings_notifications">Notifications</string>
@@ -47,4 +48,24 @@
     <string name="delete_todo_message">Are you sure you want to delete this todo?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <!-- Notification strings -->
+    <string name="notification_channel_geofence">Location Reminders</string>
+    <string name="notification_channel_geofence_desc">Notifications when you\'re near a todo location</string>
+    <string name="notification_channel_general">General Notifications</string>
+    <string name="notification_channel_general_desc">General app notifications</string>
+    <string name="notification_nearby_todo">You\'re near a todo!</string>
+
+    <!-- Permission strings -->
+    <string name="permission_location_rationale">Location permission is needed to show your position on the map and notify you when you\'re near a todo location.</string>
+    <string name="permission_background_location_rationale">Background location permission is needed to notify you when you\'re near a todo location even when the app is closed.</string>
+    <string name="permission_notification_rationale">Notification permission is needed to alert you when you\'re near a todo location.</string>
+    <string name="grant_permission">Grant Permission</string>
+
+    <!-- Location picker -->
+    <string name="pick_location">Pick Location</string>
+    <string name="tap_to_select_location">Tap on the map to select location</string>
+    <string name="confirm_location">Confirm Location</string>
+    <string name="location_selected">Location selected</string>
+    <string name="coordinates_format" formatted="false">Lat: %.6f, Lng: %.6f</string>
 </resources>

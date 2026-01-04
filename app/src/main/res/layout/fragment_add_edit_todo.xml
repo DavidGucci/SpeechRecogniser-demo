@@ -100,6 +100,17 @@
                 android:text="@string/select_location_on_map"
                 app:icon="@drawable/ic_map" />
 
+            <TextView
+                android:id="@+id/textViewSelectedCoordinates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:text="Lat: 46.056946, Lng: 14.505751"
+                tools:visibility="visible" />
+
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switchNotifyOnLocation"
                 android:layout_width="match_parent"
@@ -157,4 +168,3 @@
         app:layout_constraintStart_toEndOf="@+id/buttonCancel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
