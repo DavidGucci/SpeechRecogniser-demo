@@ -36,5 +36,23 @@
             android:name="todo_id"
             app:argType="long"
             android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_add_edit_to_location_picker"
+            app:destination="@id/navigation_location_picker" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_location_picker"
+        android:name="com.example.todomap.ui.LocationPickerFragment"
+        android:label="@string/pick_location"
+        tools:layout="@layout/fragment_location_picker">
+        <argument
+            android:name="initial_lat"
+            app:argType="float"
+            android:defaultValue="0.0" />
+        <argument
+            android:name="initial_lng"
+            app:argType="float"
+            android:defaultValue="0.0" />
     </fragment>
 </navigation>
