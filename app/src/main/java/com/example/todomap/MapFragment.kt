@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.todomap.databinding.FragmentMapBinding
 import com.example.todomap.location.LocationHelper
 import com.example.todomap.model.TodoItem
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.launch
 
@@ -85,6 +87,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 isZoomControlsEnabled = true
                 isCompassEnabled = true
                 isMyLocationButtonEnabled = false
+            }
+        }
+
+        googleMap?.setOnInfoWindowClickListener { marker: Marker ->
+            val tag = marker.tag
+            val id = when (tag) {
+                is Long -> tag
+                is Int -> (tag as Int).toLong()
+                is String -> (tag as String).toLongOrNull()
+                else -> null
+            }
+            id?.let { todoId ->
+                val bundle = Bundle().apply {
+                    putLong(com.example.todomap.ui.AddEditTodoFragment.ARG_TODO_ID, todoId)
+                }
+                findNavController().navigate(R.id.navigation_add_edit_todo, bundle)
             }
         }
 
@@ -163,13 +181,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 BitmapDescriptorFactory.HUE_RED
             }
 
-            googleMap?.addMarker(
+            val marker = googleMap?.addMarker(
                 MarkerOptions()
                     .position(position)
                     .title(todo.title)
                     .snippet(todo.description.ifEmpty { todo.locationName })
                     .icon(BitmapDescriptorFactory.defaultMarker(markerColor))
             )
+
+            marker?.tag = todo.id
 
             if (todo.notifyOnLocation && !todo.isCompleted) {
                 googleMap?.addCircle(

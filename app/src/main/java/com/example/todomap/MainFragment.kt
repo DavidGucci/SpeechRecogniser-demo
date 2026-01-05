@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -50,9 +51,6 @@ class MainFragment : Fragment() {
             onItemClick = { todo ->
                 navigateToEdit(todo)
             },
-            onItemLongClick = { todo ->
-                showDeleteDialog(todo)
-            },
             onCheckChanged = { todo, isChecked ->
                 val updatedTodo = todo.copy(isCompleted = isChecked)
                 viewLifecycleOwner.lifecycleScope.launch {
@@ -65,10 +63,38 @@ class MainFragment : Fragment() {
             adapter = todoAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+
+        binding.fabDeleteTodos.setOnClickListener {
+            val count = todoAdapter.getSelectionCount()
+            if (count <= 0) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.select_todos_to_delete),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.delete_todo_title)
+                .setMessage(getString(R.string.delete_todos_message, count))
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        val selected = todoAdapter.getSelectedItems()
+                        selected.forEach { todo ->
+                            repository.deleteTodo(todo)
+                        }
+                        todoAdapter.clearSelection()
+                    }
+                }
+                .setNegativeButton(R.string.no, null)
+                .show()
+        }
     }
 
     private fun setupFab() {
         binding.fabAddTodo.setOnClickListener {
+            todoAdapter.clearSelection()
             findNavController().navigate(R.id.navigation_add_edit_todo)
         }
     }
@@ -98,18 +124,6 @@ class MainFragment : Fragment() {
         findNavController().navigate(R.id.navigation_add_edit_todo, bundle)
     }
 
-    private fun showDeleteDialog(todo: TodoItem) {
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.delete_todo_title)
-            .setMessage(R.string.delete_todo_message)
-            .setPositiveButton(R.string.yes) { _, _ ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    repository.deleteTodo(todo)
-                }
-            }
-            .setNegativeButton(R.string.no, null)
-            .show()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

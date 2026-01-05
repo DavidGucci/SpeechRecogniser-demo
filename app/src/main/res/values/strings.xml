@@ -68,4 +68,8 @@
     <string name="confirm_location">Confirm Location</string>
     <string name="location_selected">Location selected</string>
     <string name="coordinates_format" formatted="false">Lat: %.6f, Lng: %.6f</string>
+
+    <!-- Additional strings for delete functionality -->
+    <string name="select_todos_to_delete">Select at least one todo to delete.</string>
+    <string name="delete_todos_message">Are you sure you want to delete %1$d selected todo(s)?</string>
 </resources>
