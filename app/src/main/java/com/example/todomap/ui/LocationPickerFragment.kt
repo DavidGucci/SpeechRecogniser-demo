@@ -3,6 +3,7 @@ package com.example.todomap.ui
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,8 @@ class LocationPickerFragment : Fragment(), OnMapReadyCallback {
     private val defaultZoom = 13f
 
     companion object {
+        private const val TAG = "LocationPickerFragment"
+
         const val REQUEST_KEY = "location_picker_request"
         const val RESULT_LATITUDE = "latitude"
         const val RESULT_LONGITUDE = "longitude"
@@ -103,11 +106,15 @@ class LocationPickerFragment : Fragment(), OnMapReadyCallback {
         checkLocationPermissionAndMove()
 
         arguments?.let { args ->
-            val lat = args.getDouble("initial_lat", 0.0)
-            val lng = args.getDouble("initial_lng", 0.0)
-            if (lat != 0.0 || lng != 0.0) {
-                selectLocation(LatLng(lat, lng))
-                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), 15f))
+            val hasInitial = args.getBoolean("has_initial_location", false)
+            val lat = args.getFloat("initial_lat", 0f).toDouble()
+            val lng = args.getFloat("initial_lng", 0f).toDouble()
+            Log.d(TAG, "onMapReady: hasInitial=$hasInitial initial_lat=$lat initial_lng=$lng")
+
+            if (hasInitial) {
+                val init = LatLng(lat, lng)
+                selectLocation(init)
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(init, 15f))
             }
         }
     }
@@ -128,6 +135,7 @@ class LocationPickerFragment : Fragment(), OnMapReadyCallback {
 
     private fun confirmLocation() {
         selectedLocation?.let { location ->
+            Log.d(TAG, "confirmLocation: lat=${location.latitude} lng=${location.longitude}")
             setFragmentResult(
                 REQUEST_KEY,
                 bundleOf(
@@ -209,4 +217,3 @@ class LocationPickerFragment : Fragment(), OnMapReadyCallback {
         binding.mapViewPicker.onLowMemory()
     }
 }
-

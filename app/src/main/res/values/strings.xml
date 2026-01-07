@@ -72,4 +72,21 @@
     <!-- Additional strings for delete functionality -->
     <string name="select_todos_to_delete">Select at least one todo to delete.</string>
     <string name="delete_todos_message">Are you sure you want to delete %1$d selected todo(s)?</string>
+
+    <!-- Speech recognition -->
+    <string name="dictate">Dictate</string>
+    <string name="speech_not_available">Speech recognition is not available on this device.</string>
+    <string name="permission_audio_required">Microphone permission is required for dictation.</string>
+    <string name="speech_start">Listening…</string>
+    <string name="speech_stop">Stop</string>
+    <string name="speech_error">Speech recognition error: %1$d</string>
+
+    <!-- Location / Geofence helper strings (missing) -->
+    <string name="select_location_first">Select location first.</string>
+    <string name="error_location_required">Please select a location first.</string>
+    <string name="permission_location_required">Location permission is required.</string>
+    <string name="permission_background_location_required">Background location permission is required.</string>
+    <string name="geofence_added">Geofence added</string>
+    <string name="geofence_add_failed">Failed to add geofence: %1$s</string>
+
 </resources>
