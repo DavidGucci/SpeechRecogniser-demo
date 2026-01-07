@@ -1,71 +1,130 @@
-# ToDoMap
+# Android SpeechRecognizer API
 
-ToDoMap je Android aplikacija, ki združuje upravljanje opravil (to-do) z lokacijskimi funkcijami.  
-Uporabnikom omogoča ustvarjanje opravil, ki so vezana na določeno lokacijo, ter prejemanje samodejnih obvestil (push notifications), ko se približajo izbrani točki. Aplikacija uporablja geofencing tehnologijo za pametno in kontekstualno obveščanje.
+## Opis tehnologije
+
+**Android SpeechRecognizer API** je sistemski Android API, ki omogoča pretvorbo govora v besedilo (Speech-to-Text).  
+Uporablja se za glasovne ukaze, vnos besedila z govorom in interakcijo z uporabnikom brez uporabe tipkovnice.
+
+API deluje kot vmesnik do sistemskega ali oblačnega prepoznavanja govora (odvisno od naprave in nastavitev uporabnika).
+
+Uradna dokumentacija:  
+https://developer.android.com/reference/android/speech/SpeechRecognizer
 
 ---
 
-## Namen aplikacije
+## Utemeljitev izbire
 
-Namen aplikacije je uporabniku olajšati upravljanje vsakodnevnih opravil tako, da se ta samodejno sprožijo glede na uporabnikovo lokacijo.  
+Tehnologijo **SpeechRecognizer API** sem izbral, ker:
+
+- je del uradnega Android SDK
+- ne zahteva zunanjih knjižnic
+- omogoča enostavno integracijo glasovnega upravljanja
+- je primerna za sodobne mobilne aplikacije (dostopnost, hands-free uporaba)
+
 Primeri uporabe:
-- Opomnik za nakup določenih izdelkov ob prihodu v trgovino.
-- Opomnik za obisk določenega kraja ali osebe.
-- Lokacijski opomniki za opravke med potovanjem.
-- Ustvarjanje “geo-opravil”, ki se aktivirajo v radiju določene razdalje.
+- glasovno dodajanje opravil
+- iskanje z govorom
+- upravljanje aplikacije brez dotika
 
 ---
 
-## Avtor
-**David Gucci**  
-FERI RIT UN
+## Prednosti
+
+- vgrajena podpora v Android (ni dodatnih odvisnosti)
+- brezplačna uporaba
+- podpora več jezikom
+- deluje tudi brez lastnega strežnika
+- nizka zakasnitev pri prepoznavi
 
 ---
 
-## Uporabljene tehnologije
+## Slabosti
 
-Aplikacija temelji na sodobnih Android tehnologijah in knjižnicah:
-
-### **Android / Kotlin**
-- **Kotlin** – glavni programski jezik aplikacije  
-- **Android SDK (API 24+)**
-
-### **Zemljevidi in lokacija**
-- **Google Maps SDK for Android** – prikaz zemljevida  
-- **Google Play Services – Location** – pridobivanje lokacije  
-- **Geofencing API** – sprožanje dogodkov ob vstopu/izstopu iz območja  
-
-### **Uporabniški vmesnik**
-- **XML**
-- **Material Design**
-
-### **Push Notifications**
-- **Firebase Cloud Messaging (FCM)** – pošiljanje in prejemanje potisnih obvestil  
-- **Android Notification Manager**
+- zahteva internetno povezavo (v večini primerov)
+- natančnost je odvisna od mikrofona in okolja
+- omejen nadzor nad samim modelom prepoznavanja
+- ne deluje na emulatorjih brez Google storitev
 
 ---
 
-## Ključne funkcionalnosti (povzetek)
+## Licenca
 
-- Dodajanje opravil z imenom, opisom in lokacijo.  
-- Prikaz nalog na zemljevidu Google Maps.  
-- Geofencing opomniki – obvestilo, ko se uporabnik približa določeni nalogi.  
-- Push notifications s sistemskimi obvestili.  
-- Lokalna hramba podatkov za delo brez interneta.  
-- Urejen in intuitiven uporabniški vmesnik.  
+SpeechRecognizer API je del **Android Open Source Project (AOSP)**.
 
-## Zaslonski posnetki
+Licenca:
+- **Apache License 2.0**
 
-### Sklop 1
+Uporaba je dovoljena brez omejitev za komercialne in nekomercialne projekte.
 
-<p>
-  <img src="screenshots/home.png" alt="Home" width="220" style="margin:8px;"/>
-  <img src="screenshots/add.png" alt="Add" width="220" style="margin:8px;"/>
-  <img src="screenshots/edit.png" alt="Edit" width="220" style="margin:8px;"/>
-  
-</p>
-<p>
-  <img src="screenshots/map.png" alt="Map" width="220" style="margin:8px;"/>
-  <img src="screenshots/settings.png" alt="Settings" width="220" style="margin:8px;"/>
-  <img src="screenshots/dark.png" alt="Dark mode" width="220" style="margin:8px;"/>
-</p>
+---
+
+## Število uporabnikov
+
+SpeechRecognizer API uporablja veliko Android aplikacij, saj je del osnovnega operacijskega sistema. Je en od najpogosteje uporabljenih Android API-jev.
+
+API se uporablja v aplikacijah, kot so:
+  - Google Assistant
+  - Google Search
+  - navigacijske in produktivne aplikacije
+
+---
+
+## Časovna in prostorska zahtevnost
+
+### Časovna zahtevnost
+- Prepoznavanje govora poteka v realnem času
+- Čas obdelave je približno **O(n)** glede na dolžino govornega signala
+
+### Prostorska zahtevnost
+- Minimalna poraba pomnilnika na strani aplikacije
+- Večina obdelave poteka v sistemskih storitvah ali v oblaku
+- Prostorska zahtevnost je **O(n)** glede na dolžino zvočnega zapisa
+
+---
+
+## Vzdrževanje tehnologije
+
+- Razvijalec: **Google**
+- Število razvijalcev: več deset (Android framework ekipa)
+- Tehnologija se redno posodablja skupaj z Android SDK
+- Zadnje spremembe so del vsake nove Android verzije
+
+API je stabilen in dolgoročno podprt.
+
+---
+
+## Postopek implementacije
+
+### 1. Dodajanje dovoljenj
+
+V `AndroidManifest.xml` dodamo dovoljenje za mikrofon:
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+```
+
+<img width="1169" height="371" alt="image" src="https://github.com/user-attachments/assets/f3624719-a441-4aaf-8826-ed070e6aa45d" />
+
+---
+
+## Primer kode v moji aplikaciji (Kotlin)
+
+<img width="1112" height="349" alt="image" src="https://github.com/user-attachments/assets/c20d5d63-725b-4274-b7a5-04e34db721f5" />
+
+---
+
+<img width="1159" height="1237" alt="image" src="https://github.com/user-attachments/assets/4b9db3bd-71bd-4ac9-951a-9e2d3e527dc0" />
+
+---
+
+<img width="1157" height="277" alt="image" src="https://github.com/user-attachments/assets/60413b87-4e43-4a0e-829b-20ff2ff0d80c" />
+
+---
+
+<img width="1168" height="689" alt="image" src="https://github.com/user-attachments/assets/bcf0ac12-c2d5-4e01-bdec-11c7d152f7cf" />
+
+---
+
+<img width="1167" height="477" alt="image" src="https://github.com/user-attachments/assets/716e9bba-e5e0-4767-8b03-eecd26708316" />
+
+---
