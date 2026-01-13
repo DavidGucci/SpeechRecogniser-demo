@@ -132,7 +132,7 @@ V `AndroidManifest.xml` dodamo dovoljenje za mikrofon:
 ## Primer v aplikaciji TodoMap
 
 <p>
-  <img src="screenshots/s1.jpg" alt="Home" width="1200" style="margin:8px;"/>
-  <img src="screenshots/s2.jpg" alt="Add" width="1200" style="margin:8px;"/>
+  <img src="screenshots/s1.jpg" alt="Home" width="200" style="margin:8px;"/>
+  <img src="screenshots/s2.jpg" alt="Add" width="200" style="margin:8px;"/>
 </p>
 
